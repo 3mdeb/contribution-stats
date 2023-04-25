@@ -40,36 +40,32 @@ list_single_repo() {
         # body.
         git log --pretty=format:"${LOG_FORMAT}" \
                 --date=format:"${DATE_FORMAT}" \
+                --author=@3mdeb.com \
                 --shortstat \
                 --no-merges \
                 --after=${START_DATE} |
         awk -F'[;]' '
             /__COMMIT_START__/ {
                 getline
-                email = $3
-                if (email ~ /@3mdeb\.com/) {
-                  commit = $1
-                  author = $2
-                  date = $4
-                  reviewed_on = ""
-                  getline
-                  while ($0 != "__COMMIT_END__") {
-                      if (match($0, /Reviewed-on: (.*)/, m)) {
-                          reviewed_on = m[1]
-                      }
-                      getline
-                  }
-                next
+                commit = $1
+                author = $2
+                date = $4
+                reviewed_on = ""
+                getline
+                while ($0 != "__COMMIT_END__") {
+                    if (match($0, /Reviewed-on: (.*)/, m)) {
+                        reviewed_on = m[1]
+                    }
+                    getline
                 }
+                next
             }
             /files? changed/ {
-                if (email ~ /@3mdeb\.com/) {
-                    if (match($0, /([0-9]+) insertion/, m)) insertions = m[1]
-                    if (match($0, /([0-9]+) deletion/, m)) deletions = m[1]
-                    printf "%s;%s;%s;%s;%d;%d\n", commit, author, date, reviewed_on, insertions, deletions
-                    insertions = deletions = 0
-                    reviewed_on = ""
-                }
+                if (match($0, /([0-9]+) insertion/, m)) insertions = m[1]
+                if (match($0, /([0-9]+) deletion/, m)) deletions = m[1]
+                printf "%s;%s;%s;%s;%d;%d\n", commit, author, date, reviewed_on, insertions, deletions
+                insertions = deletions = 0
+                reviewed_on = ""
             }
         '
 
