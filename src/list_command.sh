@@ -43,7 +43,8 @@ list_single_repo() {
                 --author=@3mdeb.com \
                 --shortstat \
                 --no-merges \
-                --after=${START_DATE} |
+                --after=${START_DATE} \
+                --all |
         awk -F'[;]' '
             /__COMMIT_START__/ {
                 getline
