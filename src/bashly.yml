@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2023 3mdeb <contact@3mdeb.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: contribution-stats
+help: Script gathering contribution stats from upstream projects
+version: 0.1.0
+
+commands:
+- name: sync
+  alias: s
+  help: Clone and/or all tracked upstream repositories
+
+  examples:
+  - contribution-stats sync
+
+- name: list
+  alias: l
+  help: List contribution stats
+  flags:
+  - long: --repo
+    short: -r
+    arg: repository
+    help: Repository to analyze. If not given, all tracked repositories will be analyzed.
+    required: false
+  - long: --date
+    short: -d
+    arg: date
+    help: Start date for analyze - only commits older than this date will be listed. Defaults to 01/01/2013.
+    default: 01/01/2013
+    required: false
+
+  examples:
+  - contribution-stats list
+  - contribution-stats -r coreboot -d 21/02/2023
