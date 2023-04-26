@@ -29,7 +29,15 @@ commands:
     help: Start date for analyze - only commits older than this date will be listed. Defaults to 01/01/2013.
     default: 01/01/2013
     required: false
+  - long: --out
+    short: -o
+    arg: output
+    help: Path to the output CSV file
+    default: list.csv
+    required: false
 
   examples:
   - contribution-stats list
-  - contribution-stats -r coreboot -d 21/02/2023
+  - contribution-stats list -r coreboot -d 21/02/2023
+  - contribution-stats list -r coreboot -d 21/02/2023
+  - contribution-stats list -r coreboot -d 21/02/2023 -o coreboot.csv

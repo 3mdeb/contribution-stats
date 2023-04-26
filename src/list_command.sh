@@ -4,6 +4,7 @@
 
 START_DATE="${args[--date]}"
 REPO="${args[--repo]}"
+OUTPUT_FILE=$(readlink -f "${args[--out]}")
 
 list_single_repo() {
     _repo="${1}"
@@ -68,7 +69,7 @@ list_single_repo() {
                 insertions = deletions = 0
                 reviewed_on = ""
             }
-        '
+        ' >> "${OUTPUT_FILE}"
 
         # Example output entry looks like follows:
         # 97fe17ff5984;Sergii Dmytruk;11/19/2022;https://review.coreboot.org/c/coreboot/+/68746;30;6
@@ -85,6 +86,8 @@ list_all_repos() {
        list_single_repo "${_dir}"
    done
 }
+
+rm -f "${OUTPUT_FILE}"
 
 if [ -z "${REPO}" ]; then
     echo "Listing contributions for all tracked repositories..."

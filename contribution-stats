@@ -126,6 +126,12 @@ contribution_stats_list_usage() {
     printf "    Default: 01/01/2013\n"
     echo
 
+    # :flag.usage
+    printf "  %s\n" "--out, -o OUTPUT"
+    printf "    Path to the output CSV file\n"
+    printf "    Default: list.csv\n"
+    echo
+
     # :command.usage_fixed_flags
     printf "  %s\n" "--help, -h"
     printf "    Show this help\n"
@@ -134,7 +140,9 @@ contribution_stats_list_usage() {
     # :command.usage_examples
     printf "%s\n" "Examples:"
     printf "  contribution-stats list\n"
-    printf "  contribution-stats -r coreboot -d 21/02/2023\n"
+    printf "  contribution-stats list -r coreboot -d 21/02/2023\n"
+    printf "  contribution-stats list -r coreboot -d 21/02/2023\n"
+    printf "  contribution-stats list -r coreboot -d 21/02/2023 -o coreboot.csv\n"
     echo
 
   fi
@@ -230,6 +238,7 @@ contribution_stats_list_command() {
 
   START_DATE="${args[--date]}"
   REPO="${args[--repo]}"
+  OUTPUT_FILE=$(readlink -f "${args[--out]}")
 
   list_single_repo() {
       _repo="${1}"
@@ -294,7 +303,7 @@ contribution_stats_list_command() {
                   insertions = deletions = 0
                   reviewed_on = ""
               }
-          '
+          ' >> "${OUTPUT_FILE}"
 
           # Example output entry looks like follows:
           # 97fe17ff5984;Sergii Dmytruk;11/19/2022;https://review.coreboot.org/c/coreboot/+/68746;30;6
@@ -311,6 +320,8 @@ contribution_stats_list_command() {
          list_single_repo "${_dir}"
      done
   }
+
+  rm -f "${OUTPUT_FILE}"
 
   if [ -z "${REPO}" ]; then
       echo "Listing contributions for all tracked repositories..."
@@ -506,6 +517,21 @@ contribution_stats_list_parse_requirements() {
         fi
         ;;
 
+      # :flag.case
+      --out | -o)
+
+        # :flag.case_arg
+        if [[ -n ${2+x} ]]; then
+
+          args['--out']="$2"
+          shift
+          shift
+        else
+          printf "%s\n" "--out requires an argument: --out, -o OUTPUT" >&2
+          exit 1
+        fi
+        ;;
+
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
@@ -524,6 +550,7 @@ contribution_stats_list_parse_requirements() {
 
   # :command.default_assignments
   [[ -n ${args['--date']:-} ]] || args['--date']="01/01/2013"
+  [[ -n ${args['--out']:-} ]] || args['--out']="list.csv"
 
 }
 
@@ -598,6 +625,8 @@ initialize() {
   )
 
   REPOS_DIR="repos"
+
+  SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 }
 
