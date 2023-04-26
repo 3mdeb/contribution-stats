@@ -46,7 +46,7 @@ list_single_repo() {
                 --no-merges \
                 --after=${START_DATE} \
                 --all |
-        awk -F'[;]' '
+        awk -F'[;]' -v repo="${_repo}" '
             /__COMMIT_START__/ {
                 getline
                 commit = $1
@@ -65,7 +65,7 @@ list_single_repo() {
             /files? changed/ {
                 if (match($0, /([0-9]+) insertion/, m)) insertions = m[1]
                 if (match($0, /([0-9]+) deletion/, m)) deletions = m[1]
-                printf "%s;%s;%s;%s;%d;%d\n", commit, author, date, reviewed_on, insertions, deletions
+                printf "%s;%s;%s;%s;%s;%d;%d\n", commit, author, date, repo, reviewed_on, insertions, deletions
                 insertions = deletions = 0
                 reviewed_on = ""
             }

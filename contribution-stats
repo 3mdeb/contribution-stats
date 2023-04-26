@@ -280,7 +280,7 @@ contribution_stats_list_command() {
                   --no-merges \
                   --after=${START_DATE} \
                   --all |
-          awk -F'[;]' '
+          awk -F'[;]' -v repo="${_repo}" '
               /__COMMIT_START__/ {
                   getline
                   commit = $1
@@ -299,7 +299,7 @@ contribution_stats_list_command() {
               /files? changed/ {
                   if (match($0, /([0-9]+) insertion/, m)) insertions = m[1]
                   if (match($0, /([0-9]+) deletion/, m)) deletions = m[1]
-                  printf "%s;%s;%s;%s;%d;%d\n", commit, author, date, reviewed_on, insertions, deletions
+                  printf "%s;%s;%s;%s;%s;%d;%d\n", commit, author, date, repo, reviewed_on, insertions, deletions
                   insertions = deletions = 0
                   reviewed_on = ""
               }
@@ -625,8 +625,6 @@ initialize() {
   )
 
   REPOS_DIR="repos"
-
-  SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 }
 
