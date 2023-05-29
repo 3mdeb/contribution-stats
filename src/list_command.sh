@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 START_DATE="${args[--date]}"
+END_DATE="${args[--end-date]}"
 REPO="${args[--repo]}"
 OUTPUT_FILE=$(readlink -f "${args[--out]}")
 
@@ -32,7 +33,7 @@ list_single_repo() {
         LOG_FORMAT="__COMMIT_START__%n%h;%aN;%ae;%cd;%s%n%B%n__COMMIT_END__"
         DATE_FORMAT="%m/%d/%Y"
 
-        echo "Listing contributions for: ${_repo}, after: ${START_DATE}"
+        echo "Listing contributions for: ${_repo}, after: ${START_DATE}, before: ${END_DATE}"
 
         # Use git log with a custom format to extract necessary information
         # and then filter by 3mdeb.com email domain. If 3mdeb.com domain is present,
@@ -45,6 +46,7 @@ list_single_repo() {
                 --shortstat \
                 --no-merges \
                 --after=${START_DATE} \
+                --before=${END_DATE} \
                 --all |
         awk -F'[;]' -v repo="${_repo}" '
             /__COMMIT_START__/ {

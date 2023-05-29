@@ -28,6 +28,9 @@ Examples:
 
 ```
 
+__NOTE__: To sync all repositories that 3mdeb contributed to you need at least
+31GB free space.
+
 * List
 
 ```
