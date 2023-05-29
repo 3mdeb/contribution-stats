@@ -52,6 +52,7 @@ list_single_repo() {
                 commit = $1
                 author = $2
                 date = $4
+                subject = $5
                 reviewed_on = ""
                 getline
                 while ($0 != "__COMMIT_END__") {
@@ -65,7 +66,7 @@ list_single_repo() {
             /files? changed/ {
                 if (match($0, /([0-9]+) insertion/, m)) insertions = m[1]
                 if (match($0, /([0-9]+) deletion/, m)) deletions = m[1]
-                printf "%s;%s;%s;%s;%s;%d;%d\n", commit, author, date, repo, reviewed_on, insertions, deletions
+                printf "%s;%s;%s;%s;%s;%d;%d;%s\n", commit, author, date, repo, reviewed_on, insertions, deletions, subject
                 insertions = deletions = 0
                 reviewed_on = ""
             }
