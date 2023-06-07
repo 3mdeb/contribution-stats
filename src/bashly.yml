@@ -23,11 +23,17 @@ commands:
     arg: repository
     help: Repository to analyze. If not given, all tracked repositories will be analyzed.
     required: false
-  - long: --date
-    short: -d
+  - long: --start-date
+    short: -s
     arg: date
     help: Start date for analyze - only commits older than this date will be listed. Defaults to 01/01/2013.
     default: 01/01/2013
+    required: false
+  - long: --end-date
+    short: -e
+    arg: date
+    help: End date for analyze - only commits younger than this date will be listed. Defaults to 31/12/2050.
+    default: 31/12/2050
     required: false
   - long: --out
     short: -o
@@ -38,6 +44,7 @@ commands:
 
   examples:
   - contribution-stats list
-  - contribution-stats list -r coreboot -d 21/02/2023
-  - contribution-stats list -r coreboot -d 21/02/2023
-  - contribution-stats list -r coreboot -d 21/02/2023 -o coreboot.csv
+  - contribution-stats list -r coreboot -s 21/02/2023
+  - contribution-stats list -r coreboot -s 21/02/2023
+  - contribution-stats list -r coreboot -s 01/01/2021 -e 31/12/2022
+  - contribution-stats list -r coreboot -s 21/02/2023 -o coreboot.csv

@@ -121,9 +121,15 @@ contribution_stats_list_usage() {
     echo
 
     # :flag.usage
-    printf "  %s\n" "--date, -d DATE"
+    printf "  %s\n" "--start-date, -s DATE"
     printf "    Start date for analyze - only commits older than this date will be listed.\n    Defaults to 01/01/2013.\n"
     printf "    Default: 01/01/2013\n"
+    echo
+
+    # :flag.usage
+    printf "  %s\n" "--end-date, -e DATE"
+    printf "    End date for analyze - only commits younger than this date will be listed.\n    Defaults to 31/12/2050.\n"
+    printf "    Default: 31/12/2050\n"
     echo
 
     # :flag.usage
@@ -140,9 +146,10 @@ contribution_stats_list_usage() {
     # :command.usage_examples
     printf "%s\n" "Examples:"
     printf "  contribution-stats list\n"
-    printf "  contribution-stats list -r coreboot -d 21/02/2023\n"
-    printf "  contribution-stats list -r coreboot -d 21/02/2023\n"
-    printf "  contribution-stats list -r coreboot -d 21/02/2023 -o coreboot.csv\n"
+    printf "  contribution-stats list -r coreboot -s 21/02/2023\n"
+    printf "  contribution-stats list -r coreboot -s 21/02/2023\n"
+    printf "  contribution-stats list -r coreboot -s 01/01/2021 -e 31/12/2022\n"
+    printf "  contribution-stats list -r coreboot -s 21/02/2023 -o coreboot.csv\n"
     echo
 
   fi
@@ -236,7 +243,8 @@ contribution_stats_list_command() {
   #
   # SPDX-License-Identifier: MIT
 
-  START_DATE="${args[--date]}"
+  START_DATE="${args[--start-date]}"
+  END_DATE="${args[--end-date]}"
   REPO="${args[--repo]}"
   OUTPUT_FILE=$(readlink -f "${args[--out]}")
 
@@ -266,7 +274,7 @@ contribution_stats_list_command() {
           LOG_FORMAT="__COMMIT_START__%n%h;%aN;%ae;%cd;%s%n%B%n__COMMIT_END__"
           DATE_FORMAT="%m/%d/%Y"
 
-          echo "Listing contributions for: ${_repo}, after: ${START_DATE}"
+          echo "Listing contributions for: ${_repo}, after: ${START_DATE}, before: ${END_DATE}"
 
           # Use git log with a custom format to extract necessary information
           # and then filter by 3mdeb.com email domain. If 3mdeb.com domain is present,
@@ -279,6 +287,7 @@ contribution_stats_list_command() {
                   --shortstat \
                   --no-merges \
                   --after=${START_DATE} \
+                  --before=${END_DATE} \
                   --all |
           awk -F'[;]' -v repo="${_repo}" '
               /__COMMIT_START__/ {
@@ -498,16 +507,31 @@ contribution_stats_list_parse_requirements() {
         ;;
 
       # :flag.case
-      --date | -d)
+      --start-date | -s)
 
         # :flag.case_arg
         if [[ -n ${2+x} ]]; then
 
-          args['--date']="$2"
+          args['--start-date']="$2"
           shift
           shift
         else
-          printf "%s\n" "--date requires an argument: --date, -d DATE" >&2
+          printf "%s\n" "--start-date requires an argument: --start-date, -s DATE" >&2
+          exit 1
+        fi
+        ;;
+
+      # :flag.case
+      --end-date | -e)
+
+        # :flag.case_arg
+        if [[ -n ${2+x} ]]; then
+
+          args['--end-date']="$2"
+          shift
+          shift
+        else
+          printf "%s\n" "--end-date requires an argument: --end-date, -e DATE" >&2
           exit 1
         fi
         ;;
@@ -544,7 +568,8 @@ contribution_stats_list_parse_requirements() {
   done
 
   # :command.default_assignments
-  [[ -n ${args['--date']:-} ]] || args['--date']="01/01/2013"
+  [[ -n ${args['--start-date']:-} ]] || args['--start-date']="01/01/2013"
+  [[ -n ${args['--end-date']:-} ]] || args['--end-date']="31/12/2050"
   [[ -n ${args['--out']:-} ]] || args['--out']="list.csv"
 
 }
