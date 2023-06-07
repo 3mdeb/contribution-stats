@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-START_DATE="${args[--date]}"
+START_DATE="${args[--start-date]}"
 END_DATE="${args[--end-date]}"
 REPO="${args[--repo]}"
 OUTPUT_FILE=$(readlink -f "${args[--out]}")
