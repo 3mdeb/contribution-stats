@@ -30,6 +30,7 @@ declare -A -g REPOS=(
     ["debos"]="https://github.com/go-debos/debos.git"
     ["documentation"]="https://github.com/TrenchBoot/documentation.git"
     ["ec"]="https://github.com/system76/ec.git"
+    ["efivar"]="https://github.com/rhboot/efivar"
     ["fiedka"]="https://github.com/fiedka/fiedka.git"
     ["flashrom"]="https://review.coreboot.org/flashrom.git"
     ["freebsd-ports"]="https://github.com/freebsd/freebsd-ports.git"
