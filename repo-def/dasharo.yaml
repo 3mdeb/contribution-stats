@@ -1,0 +1,4 @@
+coreboot: "https://review.coreboot.org/coreboot.git"
+flashrom: "https://review.coreboot.org/flashrom.git"
+fwupd: "https://github.com/fwupd/fwupd.git"
+seabios: "https://review.coreboot.org/seabios.git"
