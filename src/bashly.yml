@@ -54,3 +54,8 @@ commands:
   - contribution-stats list -r coreboot -s 21/02/2023
   - contribution-stats list -r coreboot -s 01/01/2021 -e 31/12/2022
   - contribution-stats list -r coreboot -s 21/02/2023 -o coreboot.csv
+
+dependencies:
+  yq:
+    command: [yq]
+    help: "Please install yq package."

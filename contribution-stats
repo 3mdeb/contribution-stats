@@ -432,6 +432,15 @@ parse_requirements() {
     esac
   done
 
+  # :command.dependencies_filter
+  if command -v yq >/dev/null 2>&1; then
+    deps['yq']="$(command -v yq | head -n1)"
+  else
+    printf "missing dependency: yq\n" >&2
+    printf "%s\n" "Please install yq package." >&2
+    exit 1
+  fi
+
   # :command.command_filter
   action=${1:-}
 
