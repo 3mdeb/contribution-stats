@@ -91,6 +91,39 @@ declare -A -g REPOS=(
 # 	["oe-meta-go"]="https://github.com/3mdeb/oe-meta-go.git"
 # )
 
+# Zarhus private customer repos
+# declare -A -g REPOS=(
+#	["ared/meta-system-installer"]="git@gitlab.com:3mdeb/ared/meta-system-installer.git"
+#	["dave_eu/meta-dave-desk"]="git@gitlab.com:3mdeb/dave_eu/meta-dave-desk.git"
+#	["dave_eu/meta-desk-mx"]="git@gitlab.com:3mdeb/dave_eu/meta-desk-mx.git"
+#	["digitex/meta-digitex"]="git@gitlab.com:3mdeb/digitex/meta-digitex.git"
+#	["emys/rockchip/meta-emys"]="git@gitlab.com:3mdeb/emys/rockchip/meta-emys.git"
+#	["meta-ared"]="git@gitlab.com:3mdeb/ared/meta-ared.git"
+#	["meta-bossanova"]="git@gitlab.com:3mdeb/bossanova/meta-bossanova.git"
+#	["meta-bs"]="git@gitlab.com:3mdeb/benchsentry/meta-bs.git"
+#	["meta-connectorio"]="git@gitlab.com:3mdeb/connectorio/meta-connectorio.git"
+#	["meta-goodseeds-bsp"]="git@gitlab.com:3mdeb/goodseeds/meta-goodseeds-bsp.git"
+#	["meta-ifm-3mdeb"]="git@gitlab.com:3mdeb/ifm/meta-ifm-3mdeb.git"
+#	["meta-ifm-vhip"]="git@gitlab.com:3mdeb/ifm/meta-ifm-vhip.git"
+#	["meta-infloent"]="git@gitlab.com:3mdeb/infloent/meta-infloent.git"
+#	["meta-isc"]="git@gitlab.com:3mdeb/isc/meta-isc.git"
+#	["meta-mezrit"]="git@gitlab.com:3mdeb/meta-mezrit.git"
+#	["meta-ohd"]="git@gitlab.com:3mdeb/jpccontrols/meta-ohd.git"
+#	["meta-operon"]="git@gitlab.com:3mdeb/operon/meta-operon.git"
+#	["meta-otab"]="git@gitlab.com:3mdeb/razorsecure/meta-otab.git"
+#	["meta-pdm3"]="git@gitlab.com:3mdeb/ifm/meta-pdm3.git"
+#	["meta-pfce"]="git@gitlab.com:3mdeb/plantformance/meta-pfce.git"
+#	["meta-posbit"]="git@gitlab.com:3mdeb/posbit/meta-posbit.git"
+#	["meta-protectli"]="git@gitlab.com:3mdeb/protectli/arm-router/meta-protectli.git"
+#	["meta-sarcos"]="git@gitlab.com:3mdeb/sarcos/meta-sarcos.git"
+#	["meta-vnc-testing"]="git@gitlab.com:3mdeb/ifm/meta-vnc-testing.git"
+#	["meta-wisene"]="git@gitlab.com:3mdeb/wisene/meta-wisene.git"
+#	["meta-wisene-bsp"]="git@gitlab.com:3mdeb/wisene/meta-wisene-bsp.git"
+#	["mobiqam/meta-mobiqam"]="git@gitlab.com:3mdeb/mobiqam/meta-mobiqam.git"
+#	["radwavetech/meta-variscite-imx-secure-boot"]="git@gitlab.com:3mdeb/radwavetech/meta-variscite-imx-secure-boot.git"
+#	["zeus/meta-zeus"]="git@gitlab.com:3mdeb/zeus/meta-zeus.git"
+#)
+
 # Other 3mdeb contribution
 # declare -A -g REPOS=(
 #     ["DPorts"]="https://github.com/DragonFlyBSD/DPorts.git"
