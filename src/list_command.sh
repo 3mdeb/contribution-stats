@@ -82,13 +82,30 @@ list_single_repo() {
     fi
 }
 
-list_all_repos() {
-   for repo in "${!REPOS[@]}"; do
-       _dir="$repo"
-       _url="${REPOS[$repo]}"
+# Function to load repository definitions from a YAML file
+load_repos_from_yamls() {
+    local repo_directory="repo-def"
 
-       list_single_repo "${_dir}"
-   done
+    # Declare the global associative array
+    declare -g -A REPOS
+
+    # Use yq to parse the YAML file and populate the REPOS array
+    # Make sure to use correct quotes and verify the command based on your yq version
+    for file in $(find "$repo_directory" -type f -name "*.yaml" ); do
+        while IFS=" " read -r key value; do
+            REPOS["$key"]="$value"
+        done < <(yq -r '. | to_entries[] | "\(.key) \(.value)"' "$file")
+    done
+}
+
+list_all_repos() {
+    load_repos_from_yamls
+    for repo in "${!REPOS[@]}"; do
+        _dir="$repo"
+        _url="${REPOS[$repo]}"
+
+        list_single_repo "${_dir}"
+    done
 }
 
 rm -f "${OUTPUT_FILE}"
