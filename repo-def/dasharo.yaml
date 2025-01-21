@@ -1,4 +1,6 @@
 coreboot: "https://review.coreboot.org/coreboot.git"
 flashrom: "https://review.coreboot.org/flashrom.git"
 fwupd: "https://github.com/fwupd/fwupd.git"
+heads: "https://github.com/linuxboot/heads.git"
+mrchromebox-edk2: "https://github.com/mrchromebox/edk2.git"
 seabios: "https://review.coreboot.org/seabios.git"
