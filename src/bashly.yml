@@ -14,7 +14,7 @@ commands:
   - long: --definition
     short: -d
     arg: definition
-    help: Definition of repositories which will be synced and the analyzed. Please check repo-def directory for YAML files containing definitions. Command look for all YAML files recursively under repo-def, thanks to that you can add your own repo definitions.
+    help: Definition of repositories which will be synced and then analyzed. Please check repo-def directory for YAML files containing definitions. Command looks for all YAML files recursively under repo-def, thanks to that you can add your own repo definitions. You can also use "all" to merge all YAML files into one.
     required: true
 
   examples:
@@ -47,12 +47,19 @@ commands:
     help: Path to the output CSV file
     default: list.csv
     required: false
+  - long: --definition
+    short: -d
+    arg: definition
+    help: Definition of repositories which will be synced and then analyzed. Please check repo-def directory for YAML files containing definitions. Command looks for all YAML files recursively under repo-def, thanks to that you can add your own repo definitions. You can also use "all" to merge all YAML files into one.
+    required: true
 
   examples:
-  - contribution-stats list
+  - contribution-stats list -d all
+  - contribution-stats list -d dasharo
+  - contribution-stats list -d zarhus
+  - contribution-stats list -d all -s 01/01/2021 -e 31/12/2022
   - contribution-stats list -r coreboot -s 21/02/2023
   - contribution-stats list -r coreboot -s 21/02/2023
-  - contribution-stats list -r coreboot -s 01/01/2021 -e 31/12/2022
   - contribution-stats list -r coreboot -s 21/02/2023 -o coreboot.csv
 
 dependencies:

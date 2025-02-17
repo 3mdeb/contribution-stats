@@ -6,6 +6,7 @@ START_DATE="${args[--start-date]}"
 END_DATE="${args[--end-date]}"
 REPO="${args[--repo]}"
 OUTPUT_FILE=$(readlink -f "${args[--out]}")
+DEFINITION="${args[--definition]}"
 
 list_single_repo() {
     _repo="${1}"
@@ -93,7 +94,8 @@ list_all_repos() {
 rm -f "${OUTPUT_FILE}"
 
 if [ -z "${REPO}" ]; then
-    echo "Listing contributions for all tracked repositories..."
+    echo "Listing contributions for definition: ${DEFINITION}"
+    load_repos_from_yaml
     list_all_repos
 else
     echo "Listing contributions for only selected repository: ${REPO}..."
